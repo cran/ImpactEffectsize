@@ -1,0 +1,13 @@
+23f25401c696ce2a0ca524d51bacfe18 *DESCRIPTION
+22a633b1b7d3a555400ec22410197df3 *NAMESPACE
+f768fcdfaf3346dae816b9daca98ade8 *NEWS.md
+c7a99060d135c58b4ee3faf25009336d *R/ClassGMD.R
+35f302df32d7e9553d0c9b097eb0e6b5 *R/GMD.R
+1a58d1bbca7dc2c8040a17d59f0970dc *R/Impact.R
+e5f14d116ad53ed95b31e53ab870f4e8 *R/plot2Densities.R
+17f0e3c8b308137aa41a1227cbfbbfbb *data/FeatureselectionData.rda
+db2bbbfeaf75e9c641e7fb75c3164159 *man/FeatureselectionData.Rd
+5f8543ad71514dd05a88174bf1b3a236 *man/GMD.Rd
+19f886097fa648d16a3f131512bdf4d3 *man/Impact.Rd
+fb9745207b6384777e6a523c0ecb4e0e *man/ImpactEffectsize-package.Rd
+d00be5c27c62a87dd664483a05613e5a *man/plot2Densities.Rd
