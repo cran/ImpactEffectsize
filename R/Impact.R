@@ -1,5 +1,5 @@
 #Calculates the Impact efefct size measure.
-#' @importFrom caTools trapz
+#' @importFrom pracma trapz
 #' @importFrom AdaptGauss ParetoDensityEstimation
 #' @importFrom methods hasArg
 #' @importFrom stats density median var

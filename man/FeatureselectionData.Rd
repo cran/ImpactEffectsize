@@ -2,9 +2,9 @@
 \alias{FeatureselectionData}
 
 \docType{data}
-\title{Example data with two groups for feature selection sexperiments with the Impact effet size measure.}
+\title{Example data with two groups and the Impact effet size measure.}
 
-\description{Dataset with 2 classes and 20 variables that allow calss separation at varous degrees of difficulty.}
+\description{Dataset with 2 classes and 20 variables that allow class separation at varous degrees of difficulty.}
 
 \usage{data("FeatureselectionData")}
 

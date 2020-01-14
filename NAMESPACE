@@ -10,6 +10,6 @@ importFrom("stats", "density", "median", "var")
 importFrom("AdaptGauss", "ParetoDensityEstimation")
 importFrom("matrixStats", "rowDiffs")
 importFrom("RcppAlgos", "comboGeneral")
-importFrom("caTools", "trapz")
+importFrom("pracma", "trapz")
 
 
