@@ -1,7 +1,7 @@
 #Plots the pdf of two groups. 
 #Default is the Pareto density estimation (PDE). 
 #A standard pdf can be chosen or will be chosen in the case of zero variance of the data. 
-#' @importFrom AdaptGauss ParetoDensityEstimation
+#' @importFrom DataVisualizations ParetoDensityEstimation
 #' @importFrom graphics abline lines plot
 #' @importFrom stats density median
 #' @importFrom methods hasArg
@@ -18,9 +18,9 @@ plot2Densities <- function(Data,Cls,col=c("red","blue"), pde=TRUE,
     pd1 = density(Data[Cls==unique(Cls)[1]])$y
     pd2 = density(Data[Cls==unique(Cls)[2]])$y
     } else {
-      pdx <- AdaptGauss::ParetoDensityEstimation(Data)$kernels
-      pd1 <- AdaptGauss::ParetoDensityEstimation(Data = Data[Cls==unique(Cls)[1]], kernels = pdx)$paretoDensity
-      pd2 <- AdaptGauss::ParetoDensityEstimation(Data = Data[Cls==unique(Cls)[2]], kernels = pdx)$paretoDensity
+      pdx <- DataVisualizations::ParetoDensityEstimation(Data)$kernels
+      pd1 <- DataVisualizations::ParetoDensityEstimation(Data = Data[Cls==unique(Cls)[1]], kernels = pdx)$paretoDensity
+      pd2 <- DataVisualizations::ParetoDensityEstimation(Data = Data[Cls==unique(Cls)[2]], kernels = pdx)$paretoDensity
     }
     xmin=min(pdx)
     xmax=max(pdx)

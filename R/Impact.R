@@ -1,6 +1,6 @@
 #Calculates the Impact efefct size measure.
 #' @importFrom pracma trapz
-#' @importFrom AdaptGauss ParetoDensityEstimation
+#' @importFrom DataVisualizations ParetoDensityEstimation
 #' @importFrom methods hasArg
 #' @importFrom stats density median var
 #' @export
@@ -12,6 +12,7 @@ Impact <- function(Data, Cls, PlotIt = FALSE, pde = TRUE,
   if(length(Data) != length(Cls)) stop("Impact: Data and Cls have different lengths!")
   if(hasArg(PlotIt) == TRUE & PlotIt == TRUE) plot2Densities(Data,Cls, ...)
   if(length(which(is.na(Data))) > 0) {
+    warning("NAs detected and removed.", call. = FALSE)
     Cls <- Cls[which(!is.na(Data))]
     Data <- Data[which(!is.na(Data))]
   }
@@ -25,9 +26,9 @@ Impact <- function(Data, Cls, PlotIt = FALSE, pde = TRUE,
       Overlap <- 0
       MorphDiff <- 0
     } else {
-      errorF0=try(AdaptGauss::ParetoDensityEstimation(Data),TRUE)
+      errorF0=try(DataVisualizations::ParetoDensityEstimation(Data),TRUE)
       if(class(errorF0) != "try-error") {
-        PDEKernels <- AdaptGauss::ParetoDensityEstimation(Data)$kernels
+        PDEKernels <- DataVisualizations::ParetoDensityEstimation(Data)$kernels
         errorF1=try(ParetoDensityEstimation(Data = Data[Cls==unique(Cls)[1]], kernels = PDEKernels),TRUE)
         errorF2=try(ParetoDensityEstimation(Data = Data[Cls==unique(Cls)[2]], kernels = PDEKernels),TRUE)
       }
