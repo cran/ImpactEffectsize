@@ -7,32 +7,32 @@
 #' @importFrom methods hasArg
 #' @export
 plot2Densities <- function(Data,Cls,col=c("red","blue"), pde=TRUE, 
-  meanLines=FALSE,medianLines=FALSE,...){
+                           meanLines=FALSE,medianLines=FALSE,...){
   if(length(Data) != length(Cls)) stop("Impact: Data and Cls have different lengths!")
-  if(var(Data[Cls==unique(Cls)[1]]) == 0 | var(Data[Cls==unique(Cls)[2]]) == 0) {
+  if(var(Data[Cls==sort(unique(Cls))[1]]) == 0 | var(Data[Cls==sort(unique(Cls))[2]]) == 0) {
     message("One or both group data have no variance. Reverting to standard pdf")
     pde = FALSE
   }
   if(hasArg(pde) == TRUE & pde == FALSE) {
     pdx = density(Data)$x
-    pd1 = density(Data[Cls==unique(Cls)[1]])$y
-    pd2 = density(Data[Cls==unique(Cls)[2]])$y
-    } else {
-      pdx <- DataVisualizations::ParetoDensityEstimation(Data)$kernels
-      pd1 <- DataVisualizations::ParetoDensityEstimation(Data = Data[Cls==unique(Cls)[1]], kernels = pdx)$paretoDensity
-      pd2 <- DataVisualizations::ParetoDensityEstimation(Data = Data[Cls==unique(Cls)[2]], kernels = pdx)$paretoDensity
-    }
-    xmin=min(pdx)
-    xmax=max(pdx)
-    ymax=max(pd1,pd2)
-    plot(pd1~pdx,type="l", lwd=3, col=col[1], xlim=c(xmin,xmax),ylim=c(0,ymax),...)
-    lines(pd2~pdx,lwd=3,col=col[2],...)
-    if(hasArg(medianLines) == TRUE & medianLines == TRUE) {
-      abline(v=median(Data[Cls==unique(Cls)[1]]), col = "magenta")
-      abline(v=median(Data[Cls==unique(Cls)[2]]), col = "magenta",lty=2)
-    }
-    if(hasArg(meanLines) == TRUE & meanLines == TRUE) {
-      abline(v=mean(Data[Cls==unique(Cls)[1]]), col = "darkgreen")
-      abline(v=mean(Data[Cls==unique(Cls)[2]]), col = "darkgreen",lty=2)
-    }
+    pd1 = density(Data[Cls==sort(unique(Cls))[1]])$y
+    pd2 = density(Data[Cls==sort(unique(Cls))[2]])$y
+  } else {
+    pdx <- DataVisualizations::ParetoDensityEstimation(Data)$kernels
+    pd1 <- DataVisualizations::ParetoDensityEstimation(Data = Data[Cls==sort(unique(Cls))[1]], kernels = pdx)$paretoDensity
+    pd2 <- DataVisualizations::ParetoDensityEstimation(Data = Data[Cls==sort(unique(Cls))[2]], kernels = pdx)$paretoDensity
   }
+  xmin=min(pdx)
+  xmax=max(pdx)
+  ymax=max(pd1,pd2)
+  plot(pd1~pdx,type="l", lwd=3, col=col[1], xlim=c(xmin,xmax),ylim=c(0,ymax),...)
+  lines(pd2~pdx,lwd=3,col=col[2],...)
+  if(hasArg(medianLines) == TRUE & medianLines == TRUE) {
+    abline(v=median(Data[Cls==sort(unique(Cls))[1]]), col = "magenta")
+    abline(v=median(Data[Cls==sort(unique(Cls))[2]]), col = "magenta",lty=2)
+  }
+  if(hasArg(meanLines) == TRUE & meanLines == TRUE) {
+    abline(v=mean(Data[Cls==sort(unique(Cls))[1]]), col = "darkgreen")
+    abline(v=mean(Data[Cls==sort(unique(Cls))[2]]), col = "darkgreen",lty=2)
+  }
+}
