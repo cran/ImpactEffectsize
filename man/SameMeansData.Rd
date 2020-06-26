@@ -2,7 +2,7 @@
 \alias{SameMeansData}
 
 \docType{data}
-\title{Example data with two groups and the Impact effet size measure.}
+\title{Example artificial data with two groups of same means but different data distribution shapes.}
 
 \description{Dataset with 2 classes six variables were both classes have the same means but different shapes of the distribution.}
 

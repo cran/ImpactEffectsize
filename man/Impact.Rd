@@ -42,6 +42,12 @@ data("FeatureselectionData")
 ImpactSize <- Impact(FeatureselectionData$Var0011, FeatureselectionData$Classes)$Impact
 plot2Densities(Data = FeatureselectionData$Var0011, Cls = FeatureselectionData$Classes, 
                xlab = "Variable", ylab = "Density", main = paste0("Impact = ",round(ImpactSize,3))) 
+## example 2
+data("BcellLymphomaCD79")
+data("FeatureselectionData")
+data("FlowcytometricData")
+data("SameMeansData")
+data("StocksFluctuation")
 }
 \keyword{Impact}
 \keyword{effect size}

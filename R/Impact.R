@@ -1,6 +1,5 @@
-#Calculates the Impact efefct size measure.
-#' @importFrom pracma trapz
-#' @importFrom DataVisualizations ParetoDensityEstimation
+#Calculates the Impact effect size measure.
+#' @importFrom caTools trapz
 #' @importFrom methods hasArg
 #' @importFrom matrixStats rowDiffs
 #' @importFrom stats density median var ks.test
@@ -30,19 +29,19 @@ Impact <- function(Data, Cls, PlotIt = FALSE, pde = TRUE,
       Overlap <- 0
       MorphDiff <- 0
     } else {
-      errorF0=try(DataVisualizations::ParetoDensityEstimation(Data),TRUE)
+      errorF0=try(ParetoDensityEstimationIE(Data),TRUE)
       if(class(errorF0) != "try-error") {
         set.seed(42)
-        PDEKernels <- DataVisualizations::ParetoDensityEstimation(Data)$kernels
-        errorF1=try(ParetoDensityEstimation(Data = Data[Cls==sort(unique(Cls))[1]], kernels = PDEKernels),TRUE)
-        errorF2=try(ParetoDensityEstimation(Data = Data[Cls==sort(unique(Cls))[2]], kernels = PDEKernels),TRUE)
+        PDEKernels <- ParetoDensityEstimationIE(Data)$kernels
+        errorF1=try(ParetoDensityEstimationIE(Data = Data[Cls==sort(unique(Cls))[1]], kernels = PDEKernels),TRUE)
+        errorF2=try(ParetoDensityEstimationIE(Data = Data[Cls==sort(unique(Cls))[2]], kernels = PDEKernels),TRUE)
       }
       MorphDiff <- 0
       if(class(errorF0) != "try-error") {
         if (class(errorF1) != "try-error" & class(errorF2) != "try-error") {
           set.seed(42)
-          pdeX1 <- ParetoDensityEstimation(Data = Data[Cls==sort(unique(Cls))[1]], kernels = PDEKernels)$paretoDensity
-          pdeX2 <- ParetoDensityEstimation(Data = Data[Cls==sort(unique(Cls))[2]], kernels = PDEKernels)$paretoDensity
+          pdeX1 <- ParetoDensityEstimationIE(Data = Data[Cls==sort(unique(Cls))[1]], kernels = PDEKernels)$paretoDensity
+          pdeX2 <- ParetoDensityEstimationIE(Data = Data[Cls==sort(unique(Cls))[2]], kernels = PDEKernels)$paretoDensity
           pdeDiff <- abs(rowDiffs(cbind(pdeX2,pdeX1)))
           Momentum1 = (sum(sign(Data[Cls==sort(unique(Cls))[1]])*log10(abs(Data[Cls==sort(unique(Cls))[1]])+1)))/(sign(length(Data[Cls==sort(unique(Cls))[1]]))*log10(abs(length(Data[Cls==sort(unique(Cls))[1]])+1)))
           Momentum2 = (sum(sign(Data[Cls==sort(unique(Cls))[2]])*log10(abs(Data[Cls==sort(unique(Cls))[2]])+1)))/(sign(length(Data[Cls==sort(unique(Cls))[2]]))*log10(abs(length(Data[Cls==sort(unique(Cls))[2]])+1)))
