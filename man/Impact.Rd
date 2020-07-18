@@ -27,7 +27,6 @@ Impact(Data, Cls, PlotIt = FALSE, pde = TRUE,
  \item{Impact}{the main effect size measure.}
  \item{MorphDiff}{the extend of the group-difference in the shapes of the pdf.}
  \item{CTDiff}{the extend of the difference in the group medians.}
- \item{GMDdata}{Gini's mean difference as a measure of data variabilty pooled between groups.}
  }
 \references{
  Lotsch, J., and Ultsch, A. (2019): 
@@ -41,7 +40,7 @@ Impact(Data, Cls, PlotIt = FALSE, pde = TRUE,
 data("FeatureselectionData")
 ImpactSize <- Impact(FeatureselectionData$Var0011, FeatureselectionData$Classes)$Impact
 plot2Densities(Data = FeatureselectionData$Var0011, Cls = FeatureselectionData$Classes, 
-               xlab = "Variable", ylab = "Density", main = paste0("Impact = ",round(ImpactSize,3))) 
+               xlab = "Variable", ylab = "Density") 
 ## example 2
 data("BcellLymphomaCD79")
 data("FeatureselectionData")
