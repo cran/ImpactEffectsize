@@ -1,4 +1,4 @@
-0346e24a1c396bfe6de6c4310651f79d *DESCRIPTION
+a65e4dfe069a0d4cc3923c26fb9d68c5 *DESCRIPTION
 30bcc091c17ea752f36cf4cc788e4372 *NAMESPACE
 f768fcdfaf3346dae816b9daca98ade8 *NEWS.md
 f5fb1ef92597fb8e9b7bfddc213566f4 *R/ClassGMD.R
@@ -11,6 +11,7 @@ bb9b6d04ef9a801986e6c925ce15f43e *R/RcppExports.R
 c52e1351ace61fb2c7d086151d2a204d *data/FlowcytometricData.rda
 dfe23b04ed49687584212a37797fe839 *data/SameMeansData.rda
 d2d1add35b863a73b6ca44838905bd64 *data/StocksFluctuation.rda
+a20a8f3f712dcfa6497b82e04b7a4584 *inst/CITATION
 d30cf78d35b4c5e236b50e2be7469dcd *man/BcellLymphomaCD79.Rd
 89a8676ca45dab5636e4e9255ce2f2cd *man/FeatureselectionData.Rd
 a175e03ff33fa2f5b3f3e50ccb06c4b2 *man/FlowcytometricData.Rd
