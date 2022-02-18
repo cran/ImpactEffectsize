@@ -7,8 +7,10 @@
 #' @export
 Impact <- function(Data, Cls, PlotIt = FALSE, pde = TRUE, col = c("red", "blue"),
                    meanLines = FALSE, medianLines = FALSE, ...) {
+
   Data = as.vector(as.matrix(Data))
   Cls = as.vector(as.matrix(Cls))
+
   if (length(unique(Cls)) != 2)
     stop("Impact: Cls has to contain exactly two distinct classes!")
   if (length(Data) != length(Cls))
@@ -18,7 +20,7 @@ Impact <- function(Data, Cls, PlotIt = FALSE, pde = TRUE, col = c("red", "blue")
     Cls <- Cls[which(!is.na(Data))]
     Data <- Data[which(!is.na(Data))]
   }
-  if (hasArg("PlotIt") == TRUE & PlotIt == TRUE)
+  if (PlotIt == TRUE)
     plot2Densities(Data, Cls, ...)
   
   DirCT <- 1
@@ -29,10 +31,16 @@ Impact <- function(Data, Cls, PlotIt = FALSE, pde = TRUE, col = c("red", "blue")
   CTDiff <- NA
   GMDdata <- NA
   
-  if (var(Data) == 0 |
-      suppressWarnings(ks.test(Data[Cls == UniqueCls[1]], Data[Cls == UniqueCls[2]])$p.value) >= 0.05)
+  KStry <- try(suppressWarnings(ks.test(Data[Cls == UniqueCls[1]], Data[Cls == UniqueCls[2]]))$p.value, TRUE)
+  if (class(KStry)[1] != "try-error") {
+    KSpval <- KStry
+  } else {
+    KSpval <- 1
+  }
+  
+  if (var(Data) == 0 || KSpval >= 0.05) {
     ImpactX2X1 = 0
-  else {
+  } else {
     MedianCls1 <- c_median(Data[Cls == UniqueCls[1]])
     MedianCls2 <- c_median(Data[Cls == UniqueCls[2]])
     DeltaM <- MedianCls2 -  MedianCls1
@@ -40,8 +48,8 @@ Impact <- function(Data, Cls, PlotIt = FALSE, pde = TRUE, col = c("red", "blue")
     GMDdata <- ClassGMD(Data, Cls)
     CTDiff <- abs(DeltaM) / GMDdata
     CTDiffWeight <- min(CTDiff, 2) / 2
-    if ((var(Data[Cls == UniqueCls[1]]) == 0 |
-         var(Data[Cls == UniqueCls[2]]) == 0) & var(Data) > 0) {
+    if ((var(Data[Cls == UniqueCls[1]]) == 0 ||
+         var(Data[Cls == UniqueCls[2]]) == 0) && var(Data) > 0) {
       MorphDiff <- 0
     } else {
       set.seed(42)
@@ -52,8 +60,8 @@ Impact <- function(Data, Cls, PlotIt = FALSE, pde = TRUE, col = c("red", "blue")
         pdeX2Try = try(ParetoDensityEstimationIE(Data = Data[Cls == UniqueCls[2]], kernels = PDEKernels), TRUE)
       }
       MorphDiff <- 0
-      if (class(PDEKernelsTry) != "try-error" &
-          class(pdeX1Try) != "try-error" & class(pdeX2Try) != "try-error") {
+      if (class(PDEKernelsTry) != "try-error" &&
+          class(pdeX1Try) != "try-error" && class(pdeX2Try) != "try-error") {
         pdeX1 <- pdeX1Try$paretoDensity
         pdeX2 <- pdeX2Try$paretoDensity
         pdeDiff <- abs(rowDiffs(cbind(pdeX2, pdeX1)))

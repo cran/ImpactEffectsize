@@ -38,9 +38,9 @@ Impact(Data, Cls, PlotIt = FALSE, pde = TRUE,
 \examples{
 ## example 1
 data("FeatureselectionData")
-ImpactSize <- Impact(FeatureselectionData$Var0011, FeatureselectionData$Classes)$Impact
-plot2Densities(Data = FeatureselectionData$Var0011, Cls = FeatureselectionData$Classes, 
-               xlab = "Variable", ylab = "Density") 
+ImpactSize <- Impact(Data = FeatureselectionData$Var0011, 
+  Cls = FeatureselectionData$Classes, PlotIt = TRUE)
+
 ## example 2
 data("BcellLymphomaCD79")
 data("FeatureselectionData")

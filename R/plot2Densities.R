@@ -11,7 +11,7 @@ plot2Densities <- function(Data, Cls, col = c("red", "blue"), pde = TRUE, meanLi
     stop("Impact: Data and Cls have different lengths!")
   UniqueCls <- sort(unique(Cls))
   
-  if (length(table(Data = Data[Cls == UniqueCls[1]])) < 2 |
+  if (length(table(Data = Data[Cls == UniqueCls[1]])) < 2 ||
       length(table(Data = Data[Cls == UniqueCls[2]])) < 2) {
     suppressWarnings(pdeX1Try <- try(ParetoDensityEstimationIE(Data = Data[Cls == UniqueCls[1]]), TRUE))
     suppressWarnings(pdeX2Try <- try(ParetoDensityEstimationIE(Data = Data[Cls == UniqueCls[2]]), TRUE))
@@ -26,12 +26,16 @@ plot2Densities <- function(Data, Cls, col = c("red", "blue"), pde = TRUE, meanLi
       pde <- FALSE
     }
   }
-  if (class(pdeX1Try) == "try-error" | class(pdeX2Try) == "try-error") {
+  if (class(pdeX1Try) == "try-error") {
+    message("Pareto density estimation failed. Reverting to standard pdf.")
+    pde <- FALSE
+  }
+  if (class(pdeX2Try) == "try-error") {
     message("Pareto density estimation failed. Reverting to standard pdf.")
     pde <- FALSE
   }
   
-  if (hasArg("pde") == TRUE & pde == FALSE) {
+  if (hasArg("pde") == TRUE && pde == FALSE) {
     pdx1 <- density(Data[Cls == UniqueCls[1]])$x
     pdx2 <- density(Data[Cls == UniqueCls[2]])$x
     pd1 <- density(Data[Cls == UniqueCls[1]])$y
@@ -48,11 +52,11 @@ plot2Densities <- function(Data, Cls, col = c("red", "blue"), pde = TRUE, meanLi
   
   plot(pd1 ~ pdx1, type = "l", lwd = 3, col = col[1], xlim = c(xmin, xmax), ylim = c(0, ymax), ...)
   lines(pd2 ~ pdx2, lwd = 3, col = col[2], ...)
-  if (hasArg("medianLines") == TRUE & medianLines == TRUE) {
+  if (hasArg("medianLines") == TRUE && medianLines == TRUE) {
     abline(v = c_median(Data[Cls == UniqueCls[1]]), col = "magenta")
     abline(v = c_median(Data[Cls == UniqueCls[2]]), col = "magenta", lty = 2)
   }
-  if (hasArg("meanLines") == TRUE & meanLines == TRUE) {
+  if (hasArg("meanLines") == TRUE && meanLines == TRUE) {
     abline(v = mean(Data[Cls == UniqueCls[1]]), col = "darkgreen")
     abline(v = mean(Data[Cls == UniqueCls[2]]), col = "darkgreen", lty = 2)
   }
