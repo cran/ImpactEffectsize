@@ -1,11 +1,11 @@
-c28434b307627e3e2d52612258d2dae3 *DESCRIPTION
+7bb2107fb8b4262bf889447d9bf57525 *DESCRIPTION
 5aae5e65f7e91bbeb001ea19679b8031 *NAMESPACE
 f768fcdfaf3346dae816b9daca98ade8 *NEWS.md
-bfff03aae447ed49e9535ec3621110d3 *R/ClassGMD.R
-cc3cc4986a8a1796ba195b5b3365649d *R/Impact.R
-1b299e24fde174aa0af9049bdca8a6b8 *R/ParetoDensityEstimationIE.R
+5c3eb4250df5bdaf4abd34dce9f29986 *R/ClassGMD.R
+3cb3ac0bf63f814d4a58696af2df1080 *R/Impact.R
+42989e2acc9c837ef9b0adce78ccbbcd *R/ParetoDensityEstimationIE.R
 bb9b6d04ef9a801986e6c925ce15f43e *R/RcppExports.R
-881355539d96407d4eb65dc7d6640afd *R/plot2Densities.R
+d2a063e40f5b340675b29749ccbf0afb *R/plot2Densities.R
 2b0f8463efcf4637045f0880164d8556 *data/BcellLymphomaCD79.rda
 7d90fca55cac3cc7060c10650c50546b *data/FeatureselectionData.rda
 c52e1351ace61fb2c7d086151d2a204d *data/FlowcytometricData.rda

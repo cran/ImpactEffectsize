@@ -7,13 +7,17 @@
 #' @importFrom methods hasArg
 #' @export
 plot2Densities <- function(Data, Cls, col = c("red", "blue"), pde = TRUE, meanLines = FALSE, medianLines = FALSE, ...) {
+  # Check if Data and Cls have the same length
   if (length(Data) != length(Cls)) {
     stop("Impact: Data and Cls have different lengths!")
   }
+  
+  # Get the unique classes
   UniqueCls <- sort(unique(Cls))
-
+  
+  # Check if there are enough data points for each class
   if (length(table(Data = Data[Cls == UniqueCls[1]])) < 2 ||
-    length(table(Data = Data[Cls == UniqueCls[2]])) < 2) {
+      length(table(Data = Data[Cls == UniqueCls[2]])) < 2) {
     suppressWarnings(pdeX1Try <- try(ParetoDensityEstimationIE(Data = Data[Cls == UniqueCls[1]]), TRUE))
     suppressWarnings(pdeX2Try <- try(ParetoDensityEstimationIE(Data = Data[Cls == UniqueCls[2]]), TRUE))
   } else {
@@ -27,6 +31,8 @@ plot2Densities <- function(Data, Cls, col = c("red", "blue"), pde = TRUE, meanLi
       pde <- FALSE
     }
   }
+  
+  # Handle errors in Pareto density estimation
   if (inherits(pdeX1Try, "try-error")) {
     message("Pareto density estimation failed. Reverting to standard pdf.")
     pde <- FALSE
@@ -35,30 +41,36 @@ plot2Densities <- function(Data, Cls, col = c("red", "blue"), pde = TRUE, meanLi
     message("Pareto density estimation failed. Reverting to standard pdf.")
     pde <- FALSE
   }
-
-  if (hasArg("pde") == TRUE && pde == FALSE) {
-    pdx1 <- density(Data[Cls == UniqueCls[1]])$x
-    pdx2 <- density(Data[Cls == UniqueCls[2]])$x
-    pd1 <- density(Data[Cls == UniqueCls[1]])$y
-    pd2 <- density(Data[Cls == UniqueCls[2]])$y
+  
+  # Calculate the density values
+  if (pde == FALSE) {
+    pdx1 <- stats::density(Data[Cls == UniqueCls[1]])$x
+    pdx2 <- stats::density(Data[Cls == UniqueCls[2]])$x
+    pd1 <- stats::density(Data[Cls == UniqueCls[1]])$y
+    pd2 <- stats::density(Data[Cls == UniqueCls[2]])$y
   } else {
     pdx1 <- pdeX1Try$kernels
     pdx2 <- pdeX2Try$kernels
     pd1 <- pdeX1Try$paretoDensity
     pd2 <- pdeX2Try$paretoDensity
   }
+  
+  # Determine the plot limits
   xmin <- min(pdx1, pdx2)
   xmax <- max(pdx1, pdx2)
   ymax <- max(pd1, pd2)
-
-  plot(pd1 ~ pdx1, type = "l", lwd = 3, col = col[1], xlim = c(xmin, xmax), ylim = c(0, ymax), ...)
-  lines(pd2 ~ pdx2, lwd = 3, col = col[2], ...)
+  
+  # Plot the densities
+  graphics::plot(pd1 ~ pdx1, type = "l", lwd = 3, col = col[1], xlim = c(xmin, xmax), ylim = c(0, ymax), ...)
+  graphics::lines(pd2 ~ pdx2, lwd = 3, col = col[2], ...)
+  
+  # Add median and mean lines if requested
   if (hasArg("medianLines") == TRUE && medianLines == TRUE) {
-    abline(v = c_median(Data[Cls == UniqueCls[1]]), col = "magenta")
-    abline(v = c_median(Data[Cls == UniqueCls[2]]), col = "magenta", lty = 2)
+    graphics::abline(v = c_median(Data[Cls == UniqueCls[1]]), col = "magenta")
+    graphics::abline(v = c_median(Data[Cls == UniqueCls[2]]), col = "magenta", lty = 2)
   }
   if (hasArg("meanLines") == TRUE && meanLines == TRUE) {
-    abline(v = mean(Data[Cls == UniqueCls[1]]), col = "darkgreen")
-    abline(v = mean(Data[Cls == UniqueCls[2]]), col = "darkgreen", lty = 2)
+    graphics::abline(v = mean(Data[Cls == UniqueCls[1]]), col = "darkgreen")
+    graphics::abline(v = mean(Data[Cls == UniqueCls[2]]), col = "darkgreen", lty = 2)
   }
 }
