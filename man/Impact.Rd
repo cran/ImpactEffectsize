@@ -9,37 +9,44 @@ Impact(Data, Cls, PlotIt = FALSE, pde = TRUE,
   col = c("red","blue"), meanLines = FALSE, medianLines = FALSE, ...)
 }
 \arguments{
- \item{Data}{the data of both groups as a vector.}
- \item{Cls}{the class information as a vector of similar length as the data vector.}
- \item{PlotIt}{plots the pdf of the two groups as Pareto density estimation.}
- \item{col}{colors of the two lines to plot.
-   Will be ignored if \code{PlotIt = FALSE}.}
- \item{pde}{plots a standard pdf insted of a non-parametric Pareto density estimation.
-   Will be ignored if \code{PlotIt = FALSE}.}
- \item{meanLines}{adds perpendicular lines at the means of the two groups.
-   Will be ignored if \code{PlotIt = FALSE}.}
- \item{medianLines}{adds perpendicular lines at the medians of the two groups.
-   Will be ignored if \code{PlotIt = FALSE}.}
- \item{\dots}{more graphical parameters can be given as plot arguments if PlotIt = TRUE.}
+ \item{Data}{Numeric vector containing the values of both groups.}
+ \item{Cls}{Grouping vector or factor of same length as Data, containing exactly two distinct classes.}
+ \item{PlotIt}{Logical; if TRUE, plots the probability density function (PDF) of the two groups using Pareto density estimation or kernel density as fallback.}
+ \item{pde}{Logical; if TRUE, attempts Pareto Density Estimation (PDE) for the PDFs in the plot. Ignored if \code{PlotIt = FALSE}.}
+ \item{col}{Character vector of length two specifying colors for the two groups in the plot. Ignored if \code{PlotIt = FALSE}.}
+ \item{meanLines}{Logical; if TRUE, draws vertical lines at group means in the plot. Ignored if \code{PlotIt = FALSE}.}
+ \item{medianLines}{Logical; if TRUE, draws vertical lines at group medians in the plot. Ignored if \code{PlotIt = FALSE}.}
+ \item{\dots}{Further graphical parameters passed to the plotting function if \code{PlotIt = TRUE}.}
 }
 \value{
-  Returns a list of value incuding the main result and intermediate results.
- \item{Impact}{the main effect size measure.}
- \item{MorphDiff}{the extend of the group-difference in the shapes of the pdf.}
- \item{CTDiff}{the extend of the difference in the group medians.}
- }
+  Returns a list with the following components:
+  \describe{
+    \item{Impact}{Numeric scalar; the combined effect size measure based on difference in medians and distribution shapes.}
+    \item{MorphDiff}{Numeric scalar; the extent of difference in shapes of the probability density functions.}
+    \item{CTDiff}{Numeric scalar; the extent of difference in group medians.}
+    \item{density_df}{Data frame with columns \code{PDEKernels}, \code{pde_Cls1}, \code{pde_Cls2} containing the density kernel points and Pareto densities for each group. This may be empty if Pareto density estimation was not successful or disabled.}
+  }
+}
+\details{
+  The Impact effect size measure combines central tendency differences (based on group medians) and morphological differences (based on Pareto density estimation).  
+  If Pareto density estimation fails or is disabled, the density plots fallback to standard kernel density estimates.  
+  The function can optionally plot these densities along with mean and/or median reference lines.
+}
 \references{
- Lotsch, J., and Ultsch, A. (2019): 
- ImpactEffectsize -- an R Package for calculation and visualisation of the Impact distance and shape based effect size measure.
+  Lotsch, J., and Ultsch, A. (2019): ImpactEffectsize -- an R Package for calculation and visualisation of the Impact distance and shape based effect size measure.
 }
 \author{
   Jorn Lotsch and Alfred Ultsch
 }
 \examples{
-## example 1
+## Example 1: Use Impact with plotting
 data("FeatureselectionData")
 ImpactSize <- Impact(Data = FeatureselectionData$Var0011, 
   Cls = FeatureselectionData$Classes, PlotIt = TRUE)
+  
+## Example 2: Impact without plotting
+ImpactSize <- Impact(Data = FeatureselectionData$Var0011, 
+  Cls = FeatureselectionData$Classes, PlotIt = FALSE)
 
 ## example 2
 data("BcellLymphomaCD79")
